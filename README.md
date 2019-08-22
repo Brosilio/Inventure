@@ -111,19 +111,38 @@ The `option` directive is the prime directive for creating interactive stories. 
 
 The `option` directive can contain as many options and locations as required.
 
-#### @if
-Like many programming languages, Inventure has an acceptably powerful `if` statement. It is equivilent to saying, "if this is true, jump to this label." You can use most expressions inside an `if` directive.
+#### @jif (jump if)
+Like many programming languages, Inventure has an acceptably powerful `if` statement. It is equivilent to saying, "if this is true, jump to this label."
+You may have noticed that this is `jif` and not `if`. That's because a `jif` directive takes a single argument, which is the name of a label to jump to if the condition is met.
+The REAL `if` directive is different, find the example on this page to see what that one does.
 
 Syntax:
 ```d
-@if ( expression ) { "location to go to" };
+@jif ( expression ) { "location to go to" };
 ```
 
 Example:
 ```d
-@if (var = "shnazzle") { "name of label to jump to" };
-@if (var < 50) { "VarIsLessThan50" };
+@jif (var = "shnazzle") { "name of label to jump to" };
+@jif (var < 50) { "VarIsLessThan50" };
 ```
+
+#### @if
+This is the real `if` directive. Like the `jif` directive, it does something only if a condition is met. However, the `jif` statement can only jump to a single label if the condition is met.
+The `if` directive can contain a block of stuff to do if the condition is met. The stuff in the block can be directives or plaintext. Or whatever.
+
+Example:
+```
+This is some plaintext that will be printed to the user.
+Here's a bit more plaintext.
+if(var == "eat pant")
+{
+    Here's some plaintext that will only be shown if the condition is met.
+    You could even replicate the functionality of a @jif directive.
+    @goto { "location" };
+}
+```
+
 
 #### @expr
 This is reserved for future expansions.

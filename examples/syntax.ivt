@@ -43,6 +43,10 @@
     }
 }
 
+// jif (jump if) jumps to the specified location if the specified condition is met.
+// jif directives cannot contain blocks of stuff to do. Only location names to jump to.
+@jif (variable == "poo") { "location name to jump to" };
+
 // The @option directive is used when a multiple-choice scenario comes up in the story.
 // Or some other interactive garbage.
 // It's a collection of valid options and names of locations to jump to when the option has been selected.
