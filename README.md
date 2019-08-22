@@ -135,7 +135,7 @@ Example:
 ```
 This is some plaintext that will be printed to the user.
 Here's a bit more plaintext.
-if(var == "eat pant")
+@if(var == "eat pant")
 {
     Here's some plaintext that will only be shown if the condition is met.
     You could even replicate the functionality of a @jif directive.
