@@ -5,25 +5,32 @@
 // Files should be parsed from top to bottom. Doesn't matter if it's on-the-fly or precomputed.
 
 // You can set various metadata things.
-@meta { "name", "value" }
+@meta { "name", "value" };
 
 // You can set variables. Variable names must not contain spaces and cannot start with a number.
 // The names basically follow all sane programming language variable name requirements.
-@var { name, "value" }
+@var { name, "value" };
 
 // This is a location definition. You can jump to this from other parts of the script, or use it in an @option statement.
 // Do not be afraid to use lots of them for complex logic. Spaghetti code here we come
-@location { "name" }
+@location { "name" };
 
 // This jumps straight to the specified label.
-@goto { "name" }
+@goto { "name" };
 
 // This is a title declaration. It should be printed in a special way to the user.
-@title { "Chapter 1" }
+@title { "Chapter 1" };
 
 // The reader should take this and use it to get raw user input. Maybe for a name or something.
 // It reads the value straight into a variable.
-@read { variable_name }
+@read { variable_name };
+
+// This should instruct the thing that prints things to the screen to write this without
+// a newline at the end.
+@write { "" };
+
+// Same as write but writes a line after.
+@writeline { "" };
 
 // If statements can be used to do things only if a certain condition is met.
 // These if statements work like any other.
@@ -55,15 +62,15 @@
 @option { "the thing the user needs to type": "where it will go if they type it", "another one": "location" }
 
 // The incr and decr directives are used to increment and decrement a variable by the specified amount.
-@incr { var_name, 50 }
-@decr { var_name, 50 }
+@incr { var_name, 50 };
+@decr { var_name, 50 };
 
 // The multiply and divied directives are used to multiply and divide variables.
-@mul { var_name, 2 }
-@div { var_name, 2 }
+@mul { var_name, 2 };
+@div { var_name, 2 };
 
 // Reserved for future use
-@expr { }
+@expr { };
 
 // Anything not preceded by an @ symbol should be automatically printed, and newlines should be
 // accounted for. For example, the reader could include a breif pause between rendering lines of text.
