@@ -46,4 +46,5 @@ You stand up and look around. There's nothing in sight for miles.
 
 @location { "scream" };
 You scream at the top of your lungs. You're not sure what you were expecting.
-You're very tired, so yo lie down.
+You're very tired, so you lie down.
+@goto { "start" };
