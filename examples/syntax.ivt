@@ -12,11 +12,14 @@
 @var { name, "value" };
 
 // This is a location definition. You can jump to this from other parts of the script, or use it in an @option statement.
-// Do not be afraid to use lots of them for complex logic. Spaghetti code here we come
-@location { "name" };
+// Do not be afraid to use lots of them for complex logic. Spaghetti code here we come. These cannot contain
+// spaces or special characters. Alphanumeric only. Can't start with a number either.
+:location_name
+// Example:
+:this_is_my_epic_location
 
 // This jumps straight to the specified label.
-@goto { "name" };
+@goto { location_name };
 
 // This is a title declaration. It should be printed in a special way to the user.
 @title { "Chapter 1" };
@@ -52,14 +55,14 @@
 
 // jif (jump if) jumps to the specified location if the specified condition is met.
 // jif directives cannot contain blocks of stuff to do. Only location names to jump to.
-@jif (variable == "poo") { "location name to jump to" };
+@jif (variable == "poo") { loc_name };
 
 // The @option directive is used when a multiple-choice scenario comes up in the story.
 // Or some other interactive garbage.
 // It's a collection of valid options and names of locations to jump to when the option has been selected.
 // The user will have to type one of the things specified in the option directive. The reader should
 // tell them if they did something stupid, and only continue when an option has been correctly entered.
-@option { "the thing the user needs to type": "where it will go if they type it", "another one": "location" };
+@option { "the thing the user needs to type": loc_name, "another one": another_location };
 
 // The incr and decr directives are used to increment and decrement a variable by the specified amount.
 @incr { var_name, 50 };
@@ -72,13 +75,13 @@
 // Reserved for future use
 @expr { };
 
-// Anything not preceded by an @ symbol should be automatically printed, and newlines should be
-// accounted for. For example, the reader could include a breif pause between rendering lines of text.
+// Anything that you would like to be plaintext must be prefixed with a backtick (`) character.
+// These will be printed to the reader.
 
-It was a dark and stormy night
-It was a dark and stormy night. There was a cow.
-This cow was very quick.
-The quick cow jumped over the sleepy, dog-shaped moon.
+`It was a dark and stormy night
+`It was a dark and stormy night. There was a cow.
+`This cow was very quick.
+`The quick cow jumped over the sleepy, dog-shaped moon.
 
 // Variables can be printed straight into text by surrounding the variable name with pointy brackets.
-John shat his pants when he saw <playername> enter the room.
+`John shat his pants when he saw <playername> enter the room.

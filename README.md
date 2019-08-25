@@ -31,7 +31,7 @@ Inventure files usually have the extension `.ivt`. Parsers can pre-parse the ent
  ```
 
 ### Directive Syntax
-All directives in Inventure begin with an "at" symbol `@`, are single words, and are followed by a semicolon. They can have parameters, which are encased in curly braces `{ }`. Parsers must support multiple `directive` statements per line.
+All directives in Inventure begin with an "at" symbol `@`, are single words, and are followed by a semicolon. They can have parameters, which are encased in curly braces `{ }`. Parsers must support multiple `directive` statements per line. There is one exception, and that is locations (or labels). Those start with a colon `:` and the name of the location follows immediately after. See below for that.
 
 Example:
 ```d
@@ -71,18 +71,21 @@ The `expunge` directive is used to remove a variable from the variable store.
 @expunge { var_name };
 ```
 
-#### @location
-The `location` directive is used to define a named location at which the parser can jump to, upon request. In programming languages, this is commonly called a label. No two `location` directives can have the same name. To jump to a location, use the `goto` directive.
-
+#### :location
+You probably noticed that this directive doesn't start with an `@` symbol. That's because it's special. The `:location` directive is a label. A label to which a `goto` directive can jump to. It's like the labels in assembly. Location names must be alphanumeric with underscores, and can't contain spaces. Like this:
 ```d
-@location { "name" };
-```
+:this_is_a_label
+
+// The following @goto directive will jump to the label ":this_is_a_label". This will loop infinitely.
+
+@goto { this_is_a_label }
 
 #### @goto
 The `goto` directive can be used to immediately jump around the file. Parsing should continue when the target `location` is reached.
+```
 
 ```d
-@goto { "name" };
+@goto { name_of_label };
 ```
 
 #### @title
@@ -99,13 +102,13 @@ The `read` directive is used to get text input from the user and then store it i
 ```
 
 #### @option
-The `option` directive is the prime directive for creating interactive stories. It is a list of options that the user can choose from, and an accompanying list of `location` names to jump to when the user chooses an item from the list. The input system will ask the user what they want to do until they select a valid option. It's up to you to decide if the user can see all the available options, or if they have to guess.
+The `option` directive is the prime directive for creating interactive stories. It is a list of options that the user can choose from, and an accompanying list of `:location` names to jump to when the user chooses an item from the list. The input system will ask the user what they want to do until they select a valid option. It's up to you to decide if the user can see all the available options, or if they have to guess. Since location labels are single, alphanumeric words that cannot start with numbers or contain spaces, the same rule applies here.
 
 ```d
 @option
 {
-    "The thing the user has to type": "the location to jump to when the user types the thing",
-    "Another thing": "another location name"
+    "The thing the user has to type": loc_name,
+    "Another thing": another_location_name
 };
 ```
 
@@ -118,13 +121,13 @@ The REAL `if` directive is different, find the example on this page to see what 
 
 Syntax:
 ```d
-@jif ( expression ) { "location to go to" };
+@jif ( expression ) { location_name };
 ```
 
 Example:
 ```d
-@jif (var = "shnazzle") { "name of label to jump to" };
-@jif (var < 50) { "VarIsLessThan50" };
+@jif (var = "shnazzle") { location_name };
+@jif (var < 50) { other_loc_name };
 ```
 
 #### @if
@@ -139,7 +142,7 @@ Here's a bit more plaintext.
 {
     Here's some plaintext that will only be shown if the condition is met.
     You could even replicate the functionality of a @jif directive.
-    @goto { "location" };
+    @goto { location };
 }
 ```
 

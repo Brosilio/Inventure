@@ -17,7 +17,7 @@
 
     `You wake up on the side of the road. It is very hot outside. You have no idea where you are.
     `You look around, and see a wallet.
-    @option { "pick up wallet": "pickupwallet", "lie down and sleep": "sleep" };
+    @option { "pick up wallet": pickupwallet, "lie down and sleep": sleep };
 
 :sleep
     @incr { loopcount, 1 };
