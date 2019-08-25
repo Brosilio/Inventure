@@ -38,7 +38,7 @@
 @if (variable == "poo")
 {
     // Continue stuff in here as normal.
-}
+};
 
 // Mathematical expressions work, too.
 @if (variable <= 50)
@@ -47,8 +47,8 @@
     @if (variable % 10 == 0)
     {
         // This would be executed if some variable was less than or equal to 50 and was a multiple of 10.
-    }
-}
+    };
+};
 
 // jif (jump if) jumps to the specified location if the specified condition is met.
 // jif directives cannot contain blocks of stuff to do. Only location names to jump to.
@@ -59,7 +59,7 @@
 // It's a collection of valid options and names of locations to jump to when the option has been selected.
 // The user will have to type one of the things specified in the option directive. The reader should
 // tell them if they did something stupid, and only continue when an option has been correctly entered.
-@option { "the thing the user needs to type": "where it will go if they type it", "another one": "location" }
+@option { "the thing the user needs to type": "where it will go if they type it", "another one": "location" };
 
 // The incr and decr directives are used to increment and decrement a variable by the specified amount.
 @incr { var_name, 50 };
@@ -74,6 +74,8 @@
 
 // Anything not preceded by an @ symbol should be automatically printed, and newlines should be
 // accounted for. For example, the reader could include a breif pause between rendering lines of text.
+
+It was a dark and stormy night
 It was a dark and stormy night. There was a cow.
 This cow was very quick.
 The quick cow jumped over the sleepy, dog-shaped moon.
