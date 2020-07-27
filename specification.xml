@@ -1,0 +1,195 @@
+<!-- About this file -->
+<!DOCTYPE inventure>   <!-- For posterity -->
+<!VERSION 0.0.0>       <!-- The version of this document -->
+
+<!-- REQUIRES tells the parser this file needs the features specified -->
+<!-- (and then automatically 'imports' them) -->
+<!-- not all features listed here exist or will exist. some are for show. -->
+<!REQUIRES browser>    <!-- This file needs to run in a browser -->
+<!REQUIRES html>       <!-- This file needs HTML support -->
+<!REQUIRES javascript> <!-- This file uses JavaScript -->
+<!REQUIRES basic>      <!-- This file uses BASIC -->
+<!REQUIRES image>      <!-- This file will display images -->
+<!REQUIRES video>      <!-- This file will display video -->
+<!REQUIRES audio>      <!-- This file will play audio -->
+<!REQUIRES wget>       <!-- This file needs to fetch resources from the web -->
+<!REQUIRES x-custom>   <!-- This file needs a custom feature -->
+
+<!-- Metadata -->
+<meta author ="billybobjoe"           />
+<meta email  ="example@example.com"   />
+<meta website="https://example.com"   />
+
+<!-- Setting global variables -->
+<set name="value"          />
+<set var="name" to="value" />
+
+<!-- Setting local variables (only accessible in current block) -->
+<let name="value"          />
+<let var="name" be="value" />
+
+<!-- Deleting variables -->
+<del var_name   />
+<del var="name" />
+
+<!-- 
+	By default, math operations will overwrite the 'var' param
+    with the result of the operation. If you specify an 'out'
+	param, the result will be stored there instead, and
+	the original value will remain unmodified. Example below.
+ -->
+<math var='name' num="123" out="result_var" />
+
+<!-- Will add 'num' to 'var' and store result in 'var' -->
+<add var="name" num="123"       />
+<add var="name" num="$some_var" />
+
+<!-- Will subtract 'num' from 'var' and store result in 'var' -->
+<sub var="name" num="123"       />
+<sub var="name" num="$some_var" />
+
+<!-- Will multiply 'var' by 'num' and store result in 'var' -->
+<mul var="name" num="123"       />
+<mul var="name" num="$some_var" />
+
+<!-- Will divide 'var' by 'num' and store result in 'var' -->
+<div var="name" num="123"       />
+<div var="name" num="$some_var" />
+
+<!-- Will raise 'var' to the power of 'num' and store result in 'var' -->
+<pow var="name" num="123"       />
+<pow var="name" num="$some_var" />
+
+<!-- Will modulo 'var' with 'num' and store result in 'var' -->
+<mod var="name" num="123"       />
+<mod var="name" num="$some_var" />
+
+<!-- Increments the var by 1 (or value specified in 'by') -->
+<inc var_name   />
+<inc var="name" />
+<inc var="name" by="123" />
+<inc var="name" by="$some_var" />
+
+<!-- Decrements the var by 1 (or value specified in 'by') -->
+<dec var_name   />
+<dec var="name" />
+<dec var="name" by="123" />
+<dec var="name" by="$some_var" />
+
+<!-- Reading input from the user, into a var -->
+<read into="number" mustbe="number" say="Type a number: "  />
+<read into="var"    cantbe="empty"  say="Type something: " />
+<read into="name"                   say="Type something: " />
+<read into="name">Type something: </read>
+
+<!-- Plain-text is printed -->
+Welcome, Professor Falken.
+
+<!-- Printing variables -->
+Welcome, <print var="username" />.
+
+<!-- Looping & setting iteration variable  -->
+<loop times="10" iter="i">
+	<!-- Local variable "i" can be accessed -->
+	Loop iteration: <print local="i" />
+</loop>
+
+<!-- Sections, can be jumped to using <go> -->
+<!-- name param is not required, but you can't jump to unnamed sections -->
+<!-- sections have their own scope -->
+<sec name="beginning">
+</sec>
+
+<!-- Safely goes to a named section - will continue where the section ends. Will not return here when done -->
+<!-- unless 'comeback' exists -->
+<go to="section name"          />
+<go to="section name" comeback />
+
+<!-- Conditionals -->
+<if var="name" meets="Karen" condition="=">
+</if>
+
+<!-- Run a script on the host -->
+<script lang="BASIC">
+</script>
+
+<!-- Does not parse contents as Inventure and instructs parser to print -->
+<raw type="html">
+
+</raw>
+
+<!-- Throw an exception and let the Inventure parser choke on it -->
+<exception reason="Something horrible has gone wrong" />
+
+<!-- Debug blocks are only interpreted when debugging -->
+<dbg>
+</dbg>
+
+<!-- Log statements are printed to the interpreter console -->
+<!-- (for example, the browser console) -->
+<!-- existence of the 'dbg' param prevents logging when not in debug mode -->
+<log this="Hello, world."    />
+<log this="Value: $some_var" />
+<log this="FUCK!" when="$some_var" meets="200" cond="=" dbg/>
+
+<!-- Can be called by a 'do' block -->
+<!-- locals will have been copied from the caller 'do' scope -->
+<!-- optionally can return the value of a local defined in the function's scope -->
+<func name="function" />
+</func ret="localvar">
+
+<!-- Calls (jumps to) a function. Will jump back to this 'do' block when done. -->
+<!-- locals defined here are copied into the callee's scope so they can be accessed -->
+<do this="function" />
+	<let something="value" />
+	<let var="varname" be="value"/>
+</do>
+
+<!-- "External-Do" - Call a function from a feature -->
+<!-- will use child locals as parameters for the call -->
+<!-- will store return value in the variable specified in the 'ret' param -->
+<!-- the 'ret' param will be the closest-scoped variable to the scope -->
+<!-- the call was made in -->
+<exdo func="alert" from="browser" ret="some_var">
+	<param text="Fuck you"     />
+	<!-- or, maybe -->
+	<param text="$some_global" />
+	<!-- or, maybe -->
+	<param name="$some_global" />
+	
+	<!-- can use 'out' if more than one value needs to be returned  -->
+	<!-- 'from' is the value set by the feature function -->
+	<!-- 'into' is where it gets copied -->
+	<out from="" into="" />
+</exdo>
+
+<!-- Copy a system-set variable to a variable -->
+<sys out="var_name" />
+<sys var_name />
+
+<!-- Instructs the Inventure parser to expunge everything and start from the top -->
+<reboot />
+
+<!-- Instructs the Inventure parser to halt -->
+<!-- Exit code optional (default 0) -->
+<exit />
+<exit code="0" />
+
+<!-- Takes the value of the variable specified in 'src' and interprets it as FML -->
+<!-- The interpreted scope will be the same as the scope the <inject> block is in -->
+<!-- This may be dangerous -->
+<inject src="var_name" />
+
+<!-- Jumps directly to a line number (includes comments + empty lines) -->
+<!-- If the location jumped to is in a different scope than this <linejump> -->
+<!-- then the Inventure parser will backtrack up the file until it can "safely" -->
+<!-- enter that scope -->
+<!-- This is a terrible idea -->
+<linejump to="123" />
+
+<!-- Defines a label that can be accessed with <jump> -->
+<:label>
+
+<!-- Jumps to a <:label> -->
+<!-- can have un-intended side-effects -->
+<jump to="label" />
