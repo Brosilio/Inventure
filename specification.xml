@@ -1,24 +1,75 @@
-<!-- About this file -->
-<!DOCTYPE inventure>   <!-- For posterity 									 -->
-<!VERSION 0.0.0>       <!-- The version of this document 					 -->
-<!NAME "storyhandler"> <!-- The programatic name of this document 			 -->
-<!PARTIAL>             <!-- Instructs the parser that this is a partial file -->
+
+<!-- ------------------- INVENTURE MARKUP LANGUAGE (IML) ------------------- -->
+<!--
+    Copyright (C) 2020 Brosilio
+    MIT License
+    https://github.com/brosilio/Inventure
+    
+    -- About --
+    Inveture Markup Language (IML) is a XML-like markup language designed for
+    making complex text adventure and choose-your-own story games.
+ -->
+
+<!-- --------------------------- File Information -------------------------- -->
+<!--
+    These Directives appear at the top of the file to tell the Inventure
+    parser what it's dealing with.
+    
+    Directives are special statements. Their syntax is as follows:
+        <!DIRECTIVE argument, argument>
+    
+    Unlike most other elements, Directives do not have a closing tag and do
+    not require a forward-slash (/) before the closing angle bracket.
+ -->
+
+<!DOCTYPE inventure> <!-- For posterity                      -->
+<!VERSION 0.0.0>     <!-- The version of this document       -->
+<!NAME storyhandler> <!-- The name of this document          -->
+<!PARTIAL>           <!-- Indicate that this file is partial -->
+
+
+<!-- ------------------------------- Features ------------------------------ -->
+<!--
+    Feature Directives are used to tell the Inventure parser about what
+    Features it needs to have in order for this IML file to work properly.
+    
+    A Feature as a native addon (plugin) to the Inventure parser that allows
+    for enhanced functionality. Some are built-in to the Inventure parser,
+    and these are always available. However, if you specify a custom Feature,
+    the user must have that Feature installed. To make it easier to find
+    custom features, you should specify the URL at which the custom Feature
+    can be found. A good URL would be the Feature's GitHub repository.
+    
+    <!FEATURE> Directives are NOT allowed in IML files that have been marked
+    with the <!PARTIAL> Directive.
+    
+    Syntax:
+        <!FEATURE name>
+    or, if it's a custom Feature:
+        <!FEATURE name, "url">
+ -->
 
 <!-- FEATURE tells the Inventure interpreter it needs the requested plugin   -->
 <!-- (feature) or else it will not work. and automatically 'imports' them.   -->
 <!-- automatically 'imports' them. These 'features' are modifications to the -->
 <!-- Inventure interpreter itself, and are implemented in native code.       -->
 <!-- <!FEATURE> bricks are not allowed in <!PARTIAL> IML files.              -->
-<!FEATURE browser>    <!-- This file needs to run in a browser 				 -->
-<!FEATURE html>       <!-- This file needs HTML support 				     -->
-<!FEATURE javascript> <!-- This file uses JavaScript 						 -->
-<!FEATURE basic>      <!-- This file uses BASIC 							 -->
-<!FEATURE image>      <!-- This file will display images 					 -->
-<!FEATURE video>      <!-- This file will display video            			 -->
+<!FEATURE browser>    <!-- This file needs to run in a browser               -->
+<!FEATURE html>       <!-- This file needs HTML support                      -->
+<!FEATURE javascript> <!-- This file uses JavaScript                         -->
+<!FEATURE basic>      <!-- This file uses BASIC                              -->
+<!FEATURE image>      <!-- This file will display images                     -->
+<!FEATURE video>      <!-- This file will display video                      -->
 <!FEATURE audio>      <!-- This file will play audio                         -->
 <!FEATURE wget>       <!-- This file needs to fetch resources from the web   -->
 <!FEATURE x-custom, "url"> <!-- This file needs a custom feature that the    -->
-						   <!-- user can find at the specified url           -->
+                           <!-- user can find at the specified url           -->
+
+
+<!-- ----------------------------- Permissions ----------------------------- -->
+<!--
+    description
+ -->
 
 <!-- Permission bricks are required for the Inventure interpreter to perform -->
 <!-- certian actions. The Inventure interpreter will prompt the user for     -->
@@ -29,33 +80,62 @@
 <!PERMISSION env.username>
 <!PERMISSION env.hostname>
 
-<!-- Allows you to <dive> into Inventure files, relative to this file's path -->
+
+<!-- ------------------------------- Includes ------------------------------ -->
+<!--
+    Allows you to <dive> into Inventure files, relative to this file's path
+ -->
 <!INCLUDE "chapter1.iml">
 <!INCLUDE "chapter2.iml">
 
-<!-- Metadata -->
+
+<!-- ------------------------------- Metadata ------------------------------ -->
+<!--
+    description
+ -->
+
 <meta author ="billybobjoe"           />
 <meta email  ="example@example.com"   />
 <meta website="https://example.com"   />
 
-<!-- Setting global variables -->
+
+<!-- ------------------------------ Variables ------------------------------ -->
+<!-- 
+    -- Accessing Variables --
+    $varName in any param will evaluate to the value of that variable.
+    Sometimes, the param accepts the *name* of a variable, not the value.
+    IML defined <func>s can be called like this:
+        @funcName('literal', 0.00, $variable)
+-->
+
+<!-- Setting Global Variables -->
 <set name="value"          />
 <set var="name" to="value" />
 
-<!-- Setting local variables (only accessible in current block) -->
+<!-- Setting Local Variables  -->
 <let name="value"          />
 <let var="name" be="value" />
 
-<!-- Deleting variables -->
+<!-- Deleting Variables -->
 <del var_name   />
 <del var="name" />
 
+<!-- Copying Variables  -->
+<cpy from="varname" to="varname" />
+<let var_name="$otherVar"          />
+<let var="name" be="$otherVar"   />
+<set var_name="$otherVar"        />
+<set var="name" to="$otherVar"   />
+
+
+<!-- --------------------------------- Math -------------------------------- -->
 <!-- 
-	By default, math operations will overwrite the 'var' param
+    By default, math operations will overwrite the 'var' param
     with the result of the operation. If you specify an 'out'
-	param, the result will be stored there instead, and
-	the original value will remain unmodified. Example below.
+    param, the result will be stored there instead, and
+    the original value will remain unmodified. Example below.
  -->
+
 <math var='name' num="123" out="result_var" />
 
 <!-- Will add 'num' to 'var' and store result in 'var' -->
@@ -94,37 +174,40 @@
 <dec var="name" by="123" />
 <dec var="name" by="$some_var" />
 
-<!-- Copying variables can be done in a few ways -->
-<cpy from="varname" to="varname" />
-<let var_name="$otherVar" 		 />
-<let var="name" be="$otherVar"   />
-<set var_name="$otherVar"        />
-<set var="name" to="$otherVar"   />
 
-<!-- Accessing variables -->
-<!-- $varName in any param will evaluate to the value of that variable.    -->
-<!-- Sometimes, the param accepts the *name* of a variable, not the value. -->
-<!-- IML defined <func>s can be called like this: 						   -->
-<!--	@funcName('literal', 0.00, $variable)                              -->
+<!-- ------------------------------- Text I/O ------------------------------ -->
+<!--
+    description
+ -->
 
-<!-- Reading input from the user, into a var -->
+<!-- Printing Plaintext -->
+Welcome, Professor Falken.
+
+<!-- Printing Variables -->
+Welcome, <print text="$username"  />.
+Welcome, <print text="@getName()" />.
+Welcome, <print username          />.
+
+<!-- Reading Plaintext From The User -->
 <read into="number" mustbe="number" say="Type a number: "  />
 <read into="var"    cantbe="empty"  say="Type something: " />
 <read into="name"                   say="Type something: " />
 <read into="name">Type something: </read>
 
-<!-- Plain-text is printed -->
-Welcome, Professor Falken.
+<!-- Does not parse contents as Inventure and instructs parser to print -->
+<raw type="html">
 
-<!-- Printing variables -->
-Welcome, <print text="$username"  />.
-Welcome, <print text="@getName()" />.
-Welcome, <print username          />.
+</raw>
+
+<!-- --------------------------- Loops & Jumping --------------------------- -->
+<!--
+    description
+ -->
 
 <!-- Looping & setting iteration variable  -->
 <loop times="10" iter="i">
-	<!-- Local variable "i" can be accessed -->
-	Loop iteration: <print local="i" />
+    <!-- Local variable "i" can be accessed -->
+    Loop iteration: <print local="i" />
 </loop>
 
 <!-- Sections, can be jumped to using <go> -->
@@ -140,6 +223,23 @@ Welcome, <print username          />.
 <go to="section name"          />
 <go to="section name" comeback />
 
+<!-- Defines a label that can be accessed with <jump> -->
+<:label />
+
+<!-- Jumps to a <:label>               -->
+<!-- can have un-intended side-effects -->
+<jump to="label"             />
+<jump to="$varWithLabelName" />
+<jump to="@findLabel()"      />
+
+<!-- Jumps directly to a line number (includes comments + empty lines).      -->
+<!-- If the location jumped to is in a different scope than this <linejump>  -->
+<!-- then the Inventure parser will backtrack up the file until it can       -->
+<!-- "safely" enter that scope. This is a terrible feature.                  -->
+<linejump to="123"              />
+<linejump to="$someNumericVar"  />
+<linejump to="@calculateJump()" />
+
 <!-- Conditionals -->
 <if var="name" meets="Karen" condition="=">
 </if>
@@ -148,23 +248,31 @@ Welcome, <print username          />.
 <script lang="BASIC">
 </script>
 
-<!-- Does not parse contents as Inventure and instructs parser to print -->
-<raw type="html">
 
-</raw>
+<!-- -------------------------------- Debug -------------------------------- -->
+<!--
+    description
+ -->
 
 <!-- Throw an exception and let the Inventure parser choke on it -->
 <exception reason="Something horrible has gone wrong" />
 
-<!-- Debug blocks are only interpreted when debugging -->
+<!-- Debug blocks are only interpreted when debugging      -->
+<!-- Debug mode is determined by the value of "sys.DEBUG"  -->
 <dbg>
 </dbg>
 
 <!-- Log statements are printed to the interpreter console -->
-<!-- (for example, the browser console) -->
+<!-- (for example, the browser console)                    -->
 <log text="Hello, world."      />
 <log text="Value: $some_var"   />
 <log text="@someFunc($someVar)"/>
+
+
+<!-- ------------------------------ Functions ------------------------------ -->
+<!--
+    description
+ -->
 
 <!-- Can be called by a 'do' block -->
 <!-- locals will have been copied from the caller 'do' scope -->
@@ -178,8 +286,8 @@ Welcome, <print username          />.
 <!-- Calls (jumps to) a function. Will jump back to this 'do' block when done. -->
 <!-- locals defined here are copied into the callee's scope so they can be accessed -->
 <do this="function" />
-	<let something="value" />
-	<let var="varname" be="value"/>
+    <let something="value" />
+    <let var="varname" be="value"/>
 </do>
 
 <!-- External-call a function from a feature -->
@@ -188,18 +296,24 @@ Welcome, <print username          />.
 <!-- the 'ret' param will be the closest-scoped variable to the scope -->
 <!-- the call was made in -->
 <extern func="alert" from="browser" ret="some_var">
-	<param text="Fuck you"     />
-	<!-- or, maybe -->
-	<param text="$some_global" />
-	<!-- or, maybe -->
-	<param name="$some_global" />
-	
-	<!-- can use 'out' if more than one value needs to be returned  -->
-	<!-- 'from' is the value set by the feature function -->
-	<!-- 'into' is where it gets copied -->
-	<out from="" into="" />
+    <param text="Fuck you"     />
+    <!-- or, maybe -->
+    <param text="$some_global" />
+    <!-- or, maybe -->
+    <param name="$some_global" />
+    
+    <!-- can use 'out' if more than one value needs to be returned  -->
+    <!-- 'from' is the value set by the feature function -->
+    <!-- 'into' is where it gets copied -->
+    <out from="" into="" />
 </extern>
 
+
+<!-- -------------------------------- System ------------------------------- -->
+<!--
+    description
+ -->
+ 
 <!-- Copy a system-set variable to a variable -->
 <sys out="var_name" />
 <sys var_name />
@@ -219,25 +333,14 @@ Welcome, <print username          />.
 <eval src="$someIML"      />
 <eval src="@getSomeIml()" />
 
-<!-- Jumps directly to a line number (includes comments + empty lines).      -->
-<!-- If the location jumped to is in a different scope than this <linejump>  -->
-<!-- then the Inventure parser will backtrack up the file until it can       -->
-<!-- "safely" enter that scope. This is a terrible feature.                  -->
-<linejump to="123" 			    />
-<linejump to="$someNumericVar"  />
-<linejump to="@calculateJump()" />
 
-<!-- Defines a label that can be accessed with <jump> -->
-<:label />
-
-<!-- Jumps to a <:label>               -->
-<!-- can have un-intended side-effects -->
-<jump to="label"             />
-<jump to="$varWithLabelName" />
-<jump to="@findLabel()"      />
+<!-- -------------------------- Diving & Surfacing ------------------------- -->
+<!--
+    description
+ -->
 
 <!-- Will "dive" into the specified IML file, using its programatic name.    -->
-<!-- That file will be given the scope that this <dive> brick has. 		     -->
+<!-- That file will be given the scope that this <dive> brick has.           -->
 <!-- You cannot dive into an IML file that is further up the dive chain.     -->
 <dive into="chapter1"       />
 <dive into="$varDiveName"   />
