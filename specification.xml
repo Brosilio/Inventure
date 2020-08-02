@@ -124,9 +124,7 @@
 
 <!-- Copying Variables  -->
 <cpy from="varname" to="varname" />
-<let var_name="$otherVar"          />
 <let var="name" be="$otherVar"   />
-<set var_name="$otherVar"        />
 <set var="name" to="$otherVar"   />
 
 
@@ -165,13 +163,11 @@
 <mod var="name" num="$some_var" />
 
 <!-- Increments the var by 1 (or value specified in 'by') -->
-<inc var_name   />
 <inc var="name" />
 <inc var="name" by="123" />
 <inc var="name" by="$some_var" />
 
 <!-- Decrements the var by 1 (or value specified in 'by') -->
-<dec var_name   />
 <dec var="name" />
 <dec var="name" by="123" />
 <dec var="name" by="$some_var" />
@@ -188,7 +184,6 @@ Welcome, Professor Falken.
 <!-- Printing Variables -->
 Welcome, <print text="$username"  />.
 Welcome, <print text="@getName()" />.
-Welcome, <print username          />.
 
 <!-- Reading Plaintext From The User -->
 <read into="number" mustbe="number" say="Type a number: "  />
@@ -320,7 +315,6 @@ Welcome, <print username          />.
  
 <!-- Copy a system-set variable to a variable -->
 <sys out="var_name" />
-<sys var_name />
 
 <!-- Instructs the Inventure parser to expunge everything and start from the top -->
 <reboot />
