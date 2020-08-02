@@ -22,7 +22,7 @@
     not require a forward-slash (/) before the closing angle bracket.
  -->
 
-<!DOCTYPE inventure> <!-- For posterity                        -->
+<!DOCTYPE inventure> <!-- For posterity, should come first     -->
 <!VERSION 0.0.0>     <!-- The version of this document         -->
 <!NAME storyhandler> <!-- The name of this document            -->
 <!PARTIAL>           <!-- Indicate that this file is a partial -->
@@ -91,7 +91,9 @@
 
 <!-- ------------------------------- Metadata ------------------------------ -->
 <!--
-    description
+    Meta tags serve no functional purpose other than to specify non-machine
+	readable information about this file, such as author names or contact
+	information.
  -->
 
 <meta author ="billybobjoe"           />
@@ -241,10 +243,12 @@ Welcome, <print username          />.
 <linejump to="@calculateJump()" />
 
 <!-- Conditionals -->
+<!-- Syntax subject to change -->
 <if var="name" meets="Karen" condition="=">
 </if>
 
 <!-- Run a script on the host -->
+<!-- This feature may be removed -->
 <script lang="BASIC">
 </script>
 
@@ -273,7 +277,7 @@ Welcome, <print username          />.
 <!--
     description
  -->
-
+ 
 <!-- Can be called by a 'do' block -->
 <!-- locals will have been copied from the caller 'do' scope -->
 <!-- optionally can return the value of a local defined in the function's scope -->
@@ -327,7 +331,7 @@ Welcome, <print username          />.
 <exit code="0" />
 
 <!-- Takes the input 'src' and interprets it as IML -->
-<!-- The interpreted scope will be the same as the scope the <inject> block is in -->
+<!-- The interpreted scope will be the same as the scope the <eval> block is in -->
 <!-- This may be dangerous -->
 <eval src="[...some IML]" />
 <eval src="$someIML"      />
@@ -336,7 +340,8 @@ Welcome, <print username          />.
 
 <!-- -------------------------- Diving & Surfacing ------------------------- -->
 <!--
-    description
+    Diving & Surfacing are important features when writing stories. These
+	features allow you to keep parts of your story in separate files.
  -->
 
 <!-- Will "dive" into the specified IML file, using its programatic name.    -->
@@ -344,11 +349,10 @@ Welcome, <print username          />.
 <!-- You cannot dive into an IML file that is further up the dive chain.     -->
 <dive into="chapter1"       />
 <dive into="$varDiveName"   />
-<dive into="&getDiveName()" />
+<dive into="@getDiveName()" />
 
 <!-- "Surfaces" back to the parent IML file at the location of the <dive>    -->
 <!-- brick that initiated the dive, and continues interpreting from there.   -->
 <!-- This is automatically done once the end-of-file has been reached for a  -->
 <!-- document.                                                               -->
 <surface />
-
