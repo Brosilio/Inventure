@@ -1,0 +1,31 @@
+<!-- ------------------------------ Inventure ------------------------------ -->
+<!DOCTYPE inventure>
+<!VERSION 0.0.0>
+<!NAME test>
+
+<meta author="brosilio" 		  />
+<meta website="https://brosil.io" />
+
+<!INCLUDE "story1.iml">
+<!INCLUDE "story2.iml">
+
+<!-- -------------------------------- Story -------------------------------- -->
+<:start />
+Welcome. <read into="playername" say="Enter your name: "/>
+
+Hello, <print text="$playername" />.
+
+Which story would you like?
+<fork>
+	<path text="Story 1">
+		<set var="story" to="1" />
+		<dive into="story1" />
+	</path>
+	<path text="Story 2">
+		<set var="story" to="2" />
+		<dive into="story2" />
+	</path>
+</fork>
+
+You completed story #<print text="$story" />.
+<go to="start" />
