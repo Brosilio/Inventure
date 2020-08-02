@@ -22,10 +22,10 @@
     not require a forward-slash (/) before the closing angle bracket.
  -->
 
-<!DOCTYPE inventure> <!-- For posterity                      -->
-<!VERSION 0.0.0>     <!-- The version of this document       -->
-<!NAME storyhandler> <!-- The name of this document          -->
-<!PARTIAL>           <!-- Indicate that this file is partial -->
+<!DOCTYPE inventure> <!-- For posterity                        -->
+<!VERSION 0.0.0>     <!-- The version of this document         -->
+<!NAME storyhandler> <!-- The name of this document            -->
+<!PARTIAL>           <!-- Indicate that this file is a partial -->
 
 
 <!-- ------------------------------- Features ------------------------------ -->
@@ -72,7 +72,7 @@
  -->
 
 <!-- Permission bricks are required for the Inventure interpreter to perform -->
-<!-- certian actions. The Inventure interpreter will prompt the user for     -->
+<!-- certain actions. The Inventure interpreter will prompt the user for     -->
 <!-- access to the requested features. This is a security feature.           -->
 <!-- If the user denies access to a PERMISSION, the Inventure interpreter    -->
 <!-- will halt immediately.                                                  -->
@@ -351,3 +351,4 @@ Welcome, <print username          />.
 <!-- This is automatically done once the end-of-file has been reached for a  -->
 <!-- document.                                                               -->
 <surface />
+
